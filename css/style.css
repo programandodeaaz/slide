@@ -10,7 +10,7 @@ ul {
 
 img {
   display: block;
-  max-width: 100%; 
+  max-width: 100%;
 }
 
 .slide-wrapper {
@@ -23,12 +23,7 @@ img {
 
 .slide li {
   flex-shrink: 0;
-  /* virtual width */
-  width: 80vw; 
+  width: 80vw;
   max-width: 800px;
   margin: 0 20px;
-}
-
-.slide {
-  transform: translate3d(-500px, 0px, 0px);
 }
