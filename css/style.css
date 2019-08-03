@@ -44,3 +44,28 @@ transition: .4s;
 opacity: 1;
 transform: scale(1);
 }
+
+/* Falando com datacontrol em si */
+[data-control="slide"] {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+/* Selecionando por atributo e falando com cada LI */
+[data-control="slide"] li a {
+  display: block;
+width: 12px;
+height: 12px;
+background: #FB5;
+border-radius: 50%;
+overflow: hidden;
+text-indent: -999px;
+margin: 5px;
+}
+
+/* Quando der hover e classe ativo */
+[data-control="slide"] li.active a, [data-control="slide"] li a:hover {
+  background: #E54;
+}
