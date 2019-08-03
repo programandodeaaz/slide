@@ -153,7 +153,7 @@ export class Slide {
 
 
 // Botão prev e next 
-export class SlideNav extends Slide {
+export default class SlideNav extends Slide {
 
   // Ativando o bind do controle
   constructor(slide, wrapper) {
