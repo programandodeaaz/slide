@@ -4,7 +4,12 @@ const slide = new SlideNav('.slide', '.slide-wrapper');
 slide.init();
 // Ativando botao slide
 slide.addArrow('.prev', '.next');
+
+// Iniciando metodo de slide
+slide.addControl();
+
 console.log(slide);
+
 
 // slide.changeSlide(3);
 // slide.activePrevSlide();

@@ -6,6 +6,9 @@ export class Slide {
     this.wrapper = document.querySelector(wrapper);
     this.dist = { finalPosition: 0, startX: 0, movement: 0 }
     this.activeClass = 'active';
+
+// Criando evento novo. Avisando navegação para mudança de slide
+    this.changeEvent = new Event('changeEvent');
   }
 
   transition(active) {
@@ -96,6 +99,9 @@ export class Slide {
     this.slidesIndexNav(index);
     this.dist.finalPosition = activeSlide.position;
     this.changeActiveClass();
+
+    // Colocando ativação do slide para funcionar de acordo com a mudança de foto por mouse
+    this.wrapper.dispatchEvent(this.changeEvent);
   }
 
   changeActiveClass() {
@@ -148,6 +154,14 @@ export class Slide {
 
 // Botão prev e next 
 export class SlideNav extends Slide {
+
+  // Ativando o bind do controle
+  constructor(slide, wrapper) {
+    super(slide, wrapper);
+    this.bindControlEvents();
+  }
+
+
   addArrow(prev, next) {
     this.prevElement = document.querySelector(prev);
     this.nextElement = document.querySelector(next);
@@ -160,4 +174,52 @@ addArrowEvent() {
   this.nextElement.addEventListener('click', this.activeNextSlide);
 }
 
+creatControl() {
+  const control = document.createElement('ul');
+  control.dataset.control = 'slide';
+
+  this.slideArray.forEach((item, index) => {
+    control.innerHTML += `<li><a href="slide${index + 1}">${index + 1}</a></li>`;
+  });
+  this.wrapper.appendChild(control);
+  return control;
 }
+
+// Criar evento para cada hover e adicionar a cada um dos itens
+eventControl(item, index) {
+  item.addEventListener('click', (event) => {
+    event.preventDefault();
+    this.changeSlide(index);
+  });
+
+  // Observando o evento de slide e ativando. Toda vez que muda slide ativa controlItem
+  this.wrapper.addEventListener('changeEvent', this.activeControlItem);
+}
+
+// Adicionando classe ativa ao hover slide
+activeControlItem() {
+  
+  // remover marcação do hover
+  this.controlArray.forEach(item => item.classList.remove(this.activeClass));
+
+  this.controlArray[this.index.active].classList.add(this.activeClass);
+}
+
+// Criando a funcao que adiciona os eventos
+addControl(customControl) {
+  this.control = document.querySelector(customControl) || this.creatControl();
+  // Criando array e desestruturando cada item do control
+  this.controlArray = [...this.control.children];
+  this.controlArray.forEach(this.eventControl);
+
+  // Ativando a primeira marcação do slide ao hover da imagem
+  this.activeControlItem();
+}
+
+bindControlEvents() {
+  this.eventControl = this.eventControl.bind(this);
+  this.activeControlItem = this.activeControlItem.bind(this);
+}
+
+}
+
